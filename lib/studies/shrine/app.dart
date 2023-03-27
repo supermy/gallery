@@ -151,6 +151,7 @@ class _ShrineAppState extends State<ShrineApp>
 
     return ScopedModel<AppStateModel>(
       model: _model.value,
+      //willPopScope来实现返回按钮拦截。
       child: WillPopScope(
         onWillPop: _onWillPop,
         child: MaterialApp(

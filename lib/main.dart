@@ -25,7 +25,8 @@ void main() {
 class GalleryApp extends StatelessWidget {
   const GalleryApp({
     super.key,
-    this.initialRoute='/shrine',
+    // this.initialRoute='/shrine',
+    this.initialRoute='/demo/',
     this.isTestMode = false,
   });
 

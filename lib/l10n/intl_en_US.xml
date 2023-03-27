@@ -2014,6 +2014,10 @@
     description="Text that shows up when valid phone number and name is submitted in form."
     >{name} phone number is {phoneNumber}</string>
   <string
+    name="demoMyLoginEMailAndPwd"
+    description="description that the localizations delegate will use."
+    >{email} password is {password}</string>
+  <string
     name="demoTextFieldRequiredField"
     description="Helper text to indicate that * means that it is a required field."
     >* indicates required field</string>

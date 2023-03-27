@@ -33,6 +33,10 @@ dependencies:
   url_launcher: ^6.1.2
   vector_math: ^2.1.2
 
+  dio: ^5.0.1
+#  flutter_screenutil: ^0.4.2
+#  font_awesome_flutter: ^8.2.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -247,6 +251,10 @@ flutter:
     - packages/shrine_images/35-0.jpg
     - packages/shrine_images/36-0.jpg
     - packages/shrine_images/37-0.jpg
+#    // 表示引入根目录下的 images 文件夹下的所有资源文件
+#    - images/
+#    // 只添加 images/ 下的 pci.png
+#    - images/pci.png
 
   generate: true
   uses-material-design: true

@@ -120,6 +120,7 @@ class TextFormFieldDemoState extends State<TextFormFieldDemo>
 
   late FocusNode _phoneNumber, _email, _lifeStory, _password, _retypePassword;
 
+// Flutter中的initState是一个生命周期方法，它在当前widget被插入到widget树中时被调用[2]。可以在initState中进行一些初始化操作，例如异步请求数据
   @override
   void initState() {
     super.initState();
@@ -130,6 +131,9 @@ class TextFormFieldDemoState extends State<TextFormFieldDemo>
     _retypePassword = FocusNode();
   }
 
+// Flutter中的dispose方法是用来释放State所占用的内存空间的。具体来说，dispose方法可以在以下情况下使用：
+// 当Stateful widget被永久性地从树中移除时，dispose方法会被调用。这个时候，可以在dispose方法中执行一些额外的指令。
+// 当使用一些需要手动释放内存空间的资源时，例如stream，需要在dispose方法中释放这些资源，以免内存泄漏。
   @override
   void dispose() {
     _phoneNumber.dispose();
@@ -140,6 +144,7 @@ class TextFormFieldDemoState extends State<TextFormFieldDemo>
     super.dispose();
   }
 
+// ScaffoldMessenger是一个小部件，提供了在屏幕顶部和底部显示snackBar和material banner的API。
   void showInSnackBar(String value) {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -164,6 +169,7 @@ class TextFormFieldDemoState extends State<TextFormFieldDemo>
   final _UsNumberTextInputFormatter _phoneNumberFormatter =
       _UsNumberTextInputFormatter();
 
+  // 提交
   void _handleSubmitted() {
     final form = _formKey.currentState!;
     if (!form.validate()) {
@@ -174,6 +180,11 @@ class TextFormFieldDemoState extends State<TextFormFieldDemo>
       );
     } else {
       form.save();
+      // print(person.phoneNumber,person.password,person.email);
+      print(person);
+      print(person.phoneNumber);
+      print(person.password);
+      print(person.email);
       showInSnackBar(GalleryLocalizations.of(context)!
           .demoTextFieldNameHasPhoneNumber(person.name!, person.phoneNumber!));
     }
@@ -227,14 +238,18 @@ class TextFormFieldDemoState extends State<TextFormFieldDemo>
               sizedBoxSpace,
               TextFormField(
                 restorationId: 'name_field',
+                // 键盘上next键（下一个或>l表示执行下一个动作
                 textInputAction: TextInputAction.next,
+                // 将textCapitalization属性设置为TextCapitalization.words，以使虚拟键盘在每个单词的开头自动切换到大写。
                 textCapitalization: TextCapitalization.words,
+                // Flutter提供了Decoration类来设置Container的样式，包括背景色、背景图、边框、圆角、阴影、渐变色等属性。
                 decoration: InputDecoration(
                   filled: true,
                   icon: const Icon(Icons.person),
                   hintText: localizations.demoTextFieldWhatDoPeopleCallYou,
                   labelText: localizations.demoTextFieldNameField,
                 ),
+                // onSaved是一个可选参数，当Form调用FormState.save时才会回调此方法。
                 onSaved: (value) {
                   person.name = value;
                   _phoneNumber.requestFocus();
@@ -253,12 +268,17 @@ class TextFormFieldDemoState extends State<TextFormFieldDemo>
                   labelText: localizations.demoTextFieldPhoneNumber,
                   prefixText: '+1 ',
                 ),
+                // TextInputType.text：文本类型
+                // TextInputType.number：数字类型
+                // TextInputType.phone：电话类型
+                // TextInputType.emailAddress：邮箱类型
                 keyboardType: TextInputType.phone,
                 onSaved: (value) {
                   person.phoneNumber = value;
                   _email.requestFocus();
                 },
                 maxLength: 14,
+                // maxLengthEnforcement有三种取值：enforced、truncateAfterCompositionEnds和none。其中enforced和truncateAfterCompositionEnds都确保文本的最终长度不超过指定的最大长度，但是它们的处理方式有所不同。enforced会截断所有文本，而truncateAfterCompositionEnds则允许组合文本超过限制，这可以提供更好的用户体验，特别是输入表意文字（例如CJK字符）时。而none则会在字符计数达到最大长度时显示一个错误信息，但不会截断文本。
                 maxLengthEnforcement: MaxLengthEnforcement.none,
                 validator: _validatePhoneNumber,
                 // TextInputFormatters are applied in sequence.

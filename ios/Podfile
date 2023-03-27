@@ -1,3 +1,7 @@
+# 使用清华源
+source "https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git"
+# pod install
+
 # Uncomment this line to define a global platform for your project
 platform :ios, '11.0'
 

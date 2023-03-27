@@ -97,7 +97,7 @@ class _ShrineLogo extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            'SHRINE',
+            '白云观小店',
             style: Theme.of(context).textTheme.headlineSmall,
           ),
         ],
@@ -118,7 +118,10 @@ class _UsernameTextField extends StatelessWidget {
       restorationId: 'username_text_field',
       cursorColor: colorScheme.onSurface,
       decoration: InputDecoration(
+        filled: true,
+        icon: const Icon(Icons.person),
         labelText: GalleryLocalizations.of(context)!.shrineLoginUsernameLabel,
+        hintText: GalleryLocalizations.of(context)!.demoTextFieldWhatDoPeopleCallYou,
         labelStyle: TextStyle(
           letterSpacing: letterSpacingOrNone(mediumLetterSpacing),
         ),
@@ -174,6 +177,7 @@ class _CancelAndNextButtons extends StatelessWidget {
               ),
             ),
             onPressed: () {
+              // 取消
               // The login screen is immediately displayed on top of
               // the Shrine home screen using onGenerateRoute and so
               // rootNavigator must be set to true in order to get out
@@ -196,6 +200,13 @@ class _CancelAndNextButtons extends StatelessWidget {
               ),
             ),
             onPressed: () {
+              // 登陆
+              debugPrint('保存登录token成功');
+              // Navigator.of(context).
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => MyLoginPage()),
+              // );
               Navigator.of(context).restorablePushNamed(ShrineApp.homeRoute);
             },
             child: Padding(

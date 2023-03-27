@@ -982,7 +982,8 @@ class _SnappingScrollPhysics extends ScrollPhysics {
         (velocity >= 0.0 && position.pixels >= position.maxScrollExtent)) {
       return super.createBallisticSimulation(position, velocity);
     }
-    final tolerance = toleranceFor(position);
+    // final tolerance = toleranceFor(position);
+    final tolerance = this.tolerance;
     final target = _getTargetPixels(position, tolerance, velocity);
     if (target != position.pixels) {
       return ScrollSpringSimulation(
@@ -1140,7 +1141,8 @@ double _carouselHeight(double scaleFactor, BuildContext context) => math.max(
     _carouselHeightMin);
 
 /// Wrap the studies with this to display a back button and allow the user to
-/// exit them at any time.
+/// exit them at any time. ///使用此选项包裹研究以显示后退按钮，并允许用户
+// ///随时退出。
 class StudyWrapper extends StatefulWidget {
   const StudyWrapper({
     super.key,

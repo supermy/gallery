@@ -892,6 +892,25 @@ class Demos {
         category: GalleryDemoCategory.material,
       ),
       GalleryDemo(
+        title: localizations.signIn,
+        icon: GalleryIcons.textFieldsAlt,
+        slug: 'my-login',
+        subtitle: localizations.demoTextFieldSubtitle,
+        configurations: [
+          GalleryDemoConfiguration(
+            title: localizations.signIn,
+            description: localizations.demoTextFieldDescription,
+            documentationUrl: '$_docsBaseUrl/material/TextField-class.html',
+            buildRoute: (context) => DeferredWidget(
+              materialDemosLibrary,
+                  () => material_demos.MyLoginPage(),
+            ),
+            code: CodeSegments.textFieldDemo,
+          ),
+        ],
+        category: GalleryDemoCategory.material,
+      ),
+      GalleryDemo(
         title: localizations.demoTooltipTitle,
         icon: GalleryIcons.tooltip,
         slug: 'tooltip',

@@ -1,4 +1,5 @@
 # Flutter Gallery
+flutter run --no-sound-null-safety
 
 Flutter Gallery is a resource to help developers evaluate and use Flutter.
 It is a collection of Material Design & Cupertino widgets, behaviors, and vignettes
@@ -53,7 +54,7 @@ The Flutter Gallery targets Flutter's `master` channel. As such, it can take adv
 of new SDK features that haven't landed in the stable channel.
 
 If you'd like to run the Flutter Gallery, you may have to switch to the `master` channel
-first:
+first:非稳定版本
 
 ```bash
 flutter channel master
@@ -61,7 +62,7 @@ flutter upgrade
 ```
 
 When you're done, use this command to return to the safety of the `stable`
-channel:
+channel:稳定版本
 
 ```bash
 flutter channel stable

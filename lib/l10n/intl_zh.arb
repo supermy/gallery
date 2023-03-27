@@ -658,6 +658,7 @@
   "demoBottomSheetPersistentTitle": "常驻底部工作表",
   "demoBottomSheetSubtitle": "常驻底部工作表和模态底部工作表",
   "demoTextFieldNameHasPhoneNumber": "{name}的手机号码是 {phoneNumber}",
+  "demoMyLoginEMailAndPwd": "{email}的口令是 {password}",
   "buttonText": "按钮",
   "demoTypographyDescription": "Material Design 中各种字体排版样式的定义。",
   "demoTypographySubtitle": "所有预定义文本样式",

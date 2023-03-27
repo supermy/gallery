@@ -2136,6 +2136,18 @@
       }
     }
   },
+    "demoMyLoginEMailAndPwd": "{email} password is {password}",
+    "@demoMyLoginEMailAndPwd": {
+      "description": "description that the localizations delegate will use.",
+          "placeholders": {
+            "email": {
+              "example": "a@a.com"
+            },
+            "password": {
+              "password": "Pa1qazse4"
+            }
+          }
+    },
   "demoTextFieldRequiredField": "* indicates required field",
   "@demoTextFieldRequiredField": {
     "description": "Helper text to indicate that * means that it is a required field."

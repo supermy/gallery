@@ -42,7 +42,7 @@ class Path {
   /// ```
   final PathWidgetBuilder builder;
 
-  /// If the route should open on the second screen on foldables.
+  /// If the route should open on the second screen on foldables.///如果路线应该在可折叠的第二个屏幕上打开。
   final bool openInSecondScreen;
 }
 
@@ -52,6 +52,8 @@ class RouteConfiguration {
   /// in the list below. As soon as there is a match, the associated builder
   /// will be returned. This means that the paths higher up in the list will
   /// take priority.
+  ///用于路由匹配的[Path]到的列表。当使用推送命名路由时[Navigator.pushNamed]，路线名称与[Path.patter]匹配
+  ///在下面的列表中。一旦有匹配，关联的生成器将被退回。这意味着列表中较高的路径将优先考虑。
   static List<Path> paths = [
     Path(
       r'^' + DemoPage.baseRoute + r'/([\w-]+)$',

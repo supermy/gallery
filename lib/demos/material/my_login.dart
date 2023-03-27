@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
 
-// BEGIN textFieldDemo
+// BEGIN Login textFieldDemo
 
-class TextFieldDemo extends StatelessWidget {
-  const TextFieldDemo({super.key});
+class MyLoginPage extends StatelessWidget {
+  const MyLoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,27 +18,27 @@ class TextFieldDemo extends StatelessWidget {
         automaticallyImplyLeading: false,
         title: Text(GalleryLocalizations.of(context)!.demoTextFieldTitle),
       ),
-      body: const TextFormFieldDemo(),
+      body: const MyLoginFormField(),
     );
   }
 }
 
-class TextFormFieldDemo extends StatefulWidget {
-  const TextFormFieldDemo({super.key});
+class MyLoginFormField extends StatefulWidget {
+  const MyLoginFormField({super.key});
 
   @override
-  TextFormFieldDemoState createState() => TextFormFieldDemoState();
+  MyLoginFormFieldState createState() => MyLoginFormFieldState();
 }
 
-class PersonData {
+class MyPersonData {
   String? name = '';
   String? phoneNumber = '';
   String? email = '';
   String password = '';
 }
 
-class PasswordField extends StatefulWidget {
-  const PasswordField({
+class MyPasswordField extends StatefulWidget {
+  const MyPasswordField({
     super.key,
     this.restorationId,
     this.fieldKey,
@@ -64,10 +64,10 @@ class PasswordField extends StatefulWidget {
   final TextInputAction? textInputAction;
 
   @override
-  State<PasswordField> createState() => _PasswordFieldState();
+  State<MyPasswordField> createState() => _MyPasswordFieldState();
 }
 
-class _PasswordFieldState extends State<PasswordField> with RestorationMixin {
+class _MyPasswordFieldState extends State<MyPasswordField> with RestorationMixin {
   final RestorableBool _obscureText = RestorableBool(true);
 
   @override
@@ -114,9 +114,9 @@ class _PasswordFieldState extends State<PasswordField> with RestorationMixin {
   }
 }
 
-class TextFormFieldDemoState extends State<TextFormFieldDemo>
+class MyLoginFormFieldState extends State<MyLoginFormField>
     with RestorationMixin {
-  PersonData person = PersonData();
+  MyPersonData person = MyPersonData();
 
   late FocusNode _phoneNumber, _email, _lifeStory, _password, _retypePassword;
 
@@ -124,11 +124,11 @@ class TextFormFieldDemoState extends State<TextFormFieldDemo>
   @override
   void initState() {
     super.initState();
-    _phoneNumber = FocusNode();
     _email = FocusNode();
-    _lifeStory = FocusNode();
     _password = FocusNode();
     _retypePassword = FocusNode();
+    _phoneNumber = FocusNode();
+    _lifeStory = FocusNode();
   }
 
 // Flutter中的dispose方法是用来释放State所占用的内存空间的。具体来说，dispose方法可以在以下情况下使用：
@@ -136,11 +136,11 @@ class TextFormFieldDemoState extends State<TextFormFieldDemo>
 // 当使用一些需要手动释放内存空间的资源时，例如stream，需要在dispose方法中释放这些资源，以免内存泄漏。
   @override
   void dispose() {
-    _phoneNumber.dispose();
     _email.dispose();
-    _lifeStory.dispose();
     _password.dispose();
     _retypePassword.dispose();
+    _phoneNumber.dispose();
+    _lifeStory.dispose();
     super.dispose();
   }
 
@@ -153,7 +153,7 @@ class TextFormFieldDemoState extends State<TextFormFieldDemo>
   }
 
   @override
-  String get restorationId => 'text_field_demo';
+  String get restorationId => 'my_login_page';
 
   @override
   void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
@@ -172,6 +172,8 @@ class TextFormFieldDemoState extends State<TextFormFieldDemo>
   // 提交
   void _handleSubmitted() {
     final form = _formKey.currentState!;
+    print(form);
+    print(form.validate());
     if (!form.validate()) {
       _autoValidateModeIndex.value =
           AutovalidateMode.always.index; // Start validating on every change.
@@ -182,11 +184,10 @@ class TextFormFieldDemoState extends State<TextFormFieldDemo>
       form.save();
       // print(person.phoneNumber,person.password,person.email);
       print(person);
-      print(person.phoneNumber);
-      print(person.password);
       print(person.email);
+      print(person.password);
       showInSnackBar(GalleryLocalizations.of(context)!
-          .demoTextFieldNameHasPhoneNumber(person.name!, person.phoneNumber!));
+          .demoMyLoginEMailAndPwd(person.email!, person.password!));
     }
   }
 
@@ -207,6 +208,27 @@ class TextFormFieldDemoState extends State<TextFormFieldDemo>
     if (!phoneExp.hasMatch(value!)) {
       return GalleryLocalizations.of(context)!.demoTextFieldEnterUSPhoneNumber;
     }
+    return null;
+  }
+
+  String? _validateEMail(String? value) {
+    final phoneExp = RegExp(r"^[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?$");
+    if (!phoneExp.hasMatch(value!)) {
+      return GalleryLocalizations.of(context)!.demoTextFieldEmail;
+    }
+    return null;
+  }
+
+  String? _validatePasswordEmpty(String? value) {
+
+    final passwordField = _passwordFieldKey.currentState!;
+    final phoneExp = RegExp(r"^[a-zA-Z][a-zA-Z0-9_]{4,18}$");
+    if (!phoneExp.hasMatch(passwordField.value!)) {
+      return GalleryLocalizations.of(context)!.demoTextFieldEnterPassword;
+    }
+    // if (passwordField.value == null || passwordField.value!.isEmpty) {
+    //   return GalleryLocalizations.of(context)!.demoTextFieldEnterPassword;
+    // }
     return null;
   }
 
@@ -235,59 +257,59 @@ class TextFormFieldDemoState extends State<TextFormFieldDemo>
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             children: [
-              sizedBoxSpace,
-              TextFormField(
-                restorationId: 'name_field',
-                // 键盘上next键（下一个或>l表示执行下一个动作
-                textInputAction: TextInputAction.next,
-                // 将textCapitalization属性设置为TextCapitalization.words，以使虚拟键盘在每个单词的开头自动切换到大写。
-                textCapitalization: TextCapitalization.words,
-                // Flutter提供了Decoration类来设置Container的样式，包括背景色、背景图、边框、圆角、阴影、渐变色等属性。
-                decoration: InputDecoration(
-                  filled: true,
-                  icon: const Icon(Icons.person),
-                  hintText: localizations.demoTextFieldWhatDoPeopleCallYou,
-                  labelText: localizations.demoTextFieldNameField,
-                ),
-                // onSaved是一个可选参数，当Form调用FormState.save时才会回调此方法。
-                onSaved: (value) {
-                  person.name = value;
-                  _phoneNumber.requestFocus();
-                },
-                validator: _validateName,
-              ),
-              sizedBoxSpace,
-              TextFormField(
-                restorationId: 'phone_number_field',
-                textInputAction: TextInputAction.next,
-                focusNode: _phoneNumber,
-                decoration: InputDecoration(
-                  filled: true,
-                  icon: const Icon(Icons.phone),
-                  hintText: localizations.demoTextFieldWhereCanWeReachYou,
-                  labelText: localizations.demoTextFieldPhoneNumber,
-                  prefixText: '+1 ',
-                ),
-                // TextInputType.text：文本类型
-                // TextInputType.number：数字类型
-                // TextInputType.phone：电话类型
-                // TextInputType.emailAddress：邮箱类型
-                keyboardType: TextInputType.phone,
-                onSaved: (value) {
-                  person.phoneNumber = value;
-                  _email.requestFocus();
-                },
-                maxLength: 14,
-                // maxLengthEnforcement有三种取值：enforced、truncateAfterCompositionEnds和none。其中enforced和truncateAfterCompositionEnds都确保文本的最终长度不超过指定的最大长度，但是它们的处理方式有所不同。enforced会截断所有文本，而truncateAfterCompositionEnds则允许组合文本超过限制，这可以提供更好的用户体验，特别是输入表意文字（例如CJK字符）时。而none则会在字符计数达到最大长度时显示一个错误信息，但不会截断文本。
-                maxLengthEnforcement: MaxLengthEnforcement.none,
-                validator: _validatePhoneNumber,
-                // TextInputFormatters are applied in sequence.
-                inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.digitsOnly,
-                  // Fit the validating format.
-                  _phoneNumberFormatter,
-                ],
-              ),
+              // sizedBoxSpace,
+              // TextFormField(
+              //   restorationId: 'name_field',
+              //   // 键盘上next键（下一个或>l表示执行下一个动作
+              //   textInputAction: TextInputAction.next,
+              //   // 将textCapitalization属性设置为TextCapitalization.words，以使虚拟键盘在每个单词的开头自动切换到大写。
+              //   textCapitalization: TextCapitalization.words,
+              //   // Flutter提供了Decoration类来设置Container的样式，包括背景色、背景图、边框、圆角、阴影、渐变色等属性。
+              //   decoration: InputDecoration(
+              //     filled: true,
+              //     icon: const Icon(Icons.person),
+              //     hintText: localizations.demoTextFieldWhatDoPeopleCallYou,
+              //     labelText: localizations.demoTextFieldNameField,
+              //   ),
+              //   // onSaved是一个可选参数，当Form调用FormState.save时才会回调此方法。
+              //   onSaved: (value) {
+              //     person.name = value;
+              //     _phoneNumber.requestFocus();
+              //   },
+              //   validator: _validateName,
+              // ),
+              // sizedBoxSpace,
+              // TextFormField(
+              //   restorationId: 'phone_number_field',
+              //   textInputAction: TextInputAction.next,
+              //   focusNode: _phoneNumber,
+              //   decoration: InputDecoration(
+              //     filled: true,
+              //     icon: const Icon(Icons.phone),
+              //     hintText: localizations.demoTextFieldWhereCanWeReachYou,
+              //     labelText: localizations.demoTextFieldPhoneNumber,
+              //     prefixText: '+1 ',
+              //   ),
+              //   // TextInputType.text：文本类型
+              //   // TextInputType.number：数字类型
+              //   // TextInputType.phone：电话类型
+              //   // TextInputType.emailAddress：邮箱类型
+              //   keyboardType: TextInputType.phone,
+              //   onSaved: (value) {
+              //     person.phoneNumber = value;
+              //     _email.requestFocus();
+              //   },
+              //   maxLength: 14,
+              //   // maxLengthEnforcement有三种取值：enforced、truncateAfterCompositionEnds和none。其中enforced和truncateAfterCompositionEnds都确保文本的最终长度不超过指定的最大长度，但是它们的处理方式有所不同。enforced会截断所有文本，而truncateAfterCompositionEnds则允许组合文本超过限制，这可以提供更好的用户体验，特别是输入表意文字（例如CJK字符）时。而none则会在字符计数达到最大长度时显示一个错误信息，但不会截断文本。
+              //   maxLengthEnforcement: MaxLengthEnforcement.none,
+              //   validator: _validatePhoneNumber,
+              //   // TextInputFormatters are applied in sequence.
+              //   inputFormatters: <TextInputFormatter>[
+              //     FilteringTextInputFormatter.digitsOnly,
+              //     // Fit the validating format.
+              //     _phoneNumberFormatter,
+              //   ],
+              // ),
               sizedBoxSpace,
               TextFormField(
                 restorationId: 'email_field',
@@ -300,79 +322,87 @@ class TextFormFieldDemoState extends State<TextFormFieldDemo>
                   labelText: localizations.demoTextFieldEmail,
                 ),
                 keyboardType: TextInputType.emailAddress,
+                validator: _validateEMail,
                 onSaved: (value) {
                   person.email = value;
-                  _lifeStory.requestFocus();
+                  _password.requestFocus();
                 },
               ),
+              // sizedBoxSpace,
+              // // Disabled text field
+              // TextFormField(
+              //   enabled: false,
+              //   restorationId: 'disabled_email_field',
+              //   textInputAction: TextInputAction.next,
+              //   decoration: InputDecoration(
+              //     filled: true,
+              //     icon: const Icon(Icons.email),
+              //     hintText: localizations.demoTextFieldYourEmailAddress,
+              //     labelText: localizations.demoTextFieldEmail,
+              //   ),
+              //   keyboardType: TextInputType.emailAddress,
+              // ),
+              // sizedBoxSpace,
+              // TextFormField(
+              //   restorationId: 'life_story_field',
+              //   focusNode: _lifeStory,
+              //   decoration: InputDecoration(
+              //     border: const OutlineInputBorder(),
+              //     hintText: localizations.demoTextFieldTellUsAboutYourself,
+              //     helperText: localizations.demoTextFieldKeepItShort,
+              //     labelText: localizations.demoTextFieldLifeStory,
+              //   ),
+              //   maxLines: 3,
+              // ),
+              // sizedBoxSpace,
+              // TextFormField(
+              //   restorationId: 'salary_field',
+              //   textInputAction: TextInputAction.next,
+              //   keyboardType: TextInputType.number,
+              //   decoration: InputDecoration(
+              //     border: const OutlineInputBorder(),
+              //     labelText: localizations.demoTextFieldSalary,
+              //     suffixText: localizations.demoTextFieldUSD,
+              //   ),
+              //   maxLines: 1,
+              // ),
               sizedBoxSpace,
-              // Disabled text field
-              TextFormField(
-                enabled: false,
-                restorationId: 'disabled_email_field',
-                textInputAction: TextInputAction.next,
-                decoration: InputDecoration(
-                  filled: true,
-                  icon: const Icon(Icons.email),
-                  hintText: localizations.demoTextFieldYourEmailAddress,
-                  labelText: localizations.demoTextFieldEmail,
-                ),
-                keyboardType: TextInputType.emailAddress,
-              ),
-              sizedBoxSpace,
-              TextFormField(
-                restorationId: 'life_story_field',
-                focusNode: _lifeStory,
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
-                  hintText: localizations.demoTextFieldTellUsAboutYourself,
-                  helperText: localizations.demoTextFieldKeepItShort,
-                  labelText: localizations.demoTextFieldLifeStory,
-                ),
-                maxLines: 3,
-              ),
-              sizedBoxSpace,
-              TextFormField(
-                restorationId: 'salary_field',
-                textInputAction: TextInputAction.next,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
-                  labelText: localizations.demoTextFieldSalary,
-                  suffixText: localizations.demoTextFieldUSD,
-                ),
-                maxLines: 1,
-              ),
-              sizedBoxSpace,
-              PasswordField(
+              MyPasswordField(
                 restorationId: 'password_field',
                 textInputAction: TextInputAction.next,
                 focusNode: _password,
                 fieldKey: _passwordFieldKey,
                 helperText: localizations.demoTextFieldNoMoreThan,
                 labelText: localizations.demoTextFieldPassword,
+                validator: _validatePasswordEmpty,
+                onSaved: (value) {
+                  person.password = value!;
+                },
                 onFieldSubmitted: (value) {
+                  // print("onFieldSubmitted");
                   setState(() {
+                    // print(value);
                     person.password = value;
-                    _retypePassword.requestFocus();
+                    // _retypePassword.requestFocus();
                   });
+                  // _handleSubmitted();
                 },
               ),
-              sizedBoxSpace,
-              TextFormField(
-                restorationId: 'retype_password_field',
-                focusNode: _retypePassword,
-                decoration: InputDecoration(
-                  filled: true,
-                  labelText: localizations.demoTextFieldRetypePassword,
-                ),
-                maxLength: 8,
-                obscureText: true,
-                validator: _validatePassword,
-                onFieldSubmitted: (value) {
-                  _handleSubmitted();
-                },
-              ),
+              // sizedBoxSpace,
+              // TextFormField(
+              //   restorationId: 'retype_password_field',
+              //   focusNode: _retypePassword,
+              //   decoration: InputDecoration(
+              //     filled: true,
+              //     labelText: localizations.demoTextFieldRetypePassword,
+              //   ),
+              //   maxLength: 8,
+              //   obscureText: true,
+              //   validator: _validatePassword,
+              //   onFieldSubmitted: (value) {
+              //     _handleSubmitted();
+              //   },
+              // ),
               sizedBoxSpace,
               Center(
                 child: ElevatedButton(
