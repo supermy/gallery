@@ -21,5 +21,7 @@ export 'package:gallery/demos/material/sliders_demo.dart';
 export 'package:gallery/demos/material/snackbar_demo.dart';
 export 'package:gallery/demos/material/tabs_demo.dart';
 export 'package:gallery/demos/material/text_field_demo.dart';
-export 'package:gallery/demos/material/my_login.dart';
+export 'package:gallery/demos/material/signin.dart';
+export 'package:gallery/demos/material/signup.dart';
+export 'package:gallery/demos/material/pwdreset.dart';
 export 'package:gallery/demos/material/tooltip_demo.dart';

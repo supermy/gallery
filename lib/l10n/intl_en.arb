@@ -41,6 +41,14 @@
   "@signIn": {
     "description": "Sign in label to sign into website."
   },
+   "signUp": "SIGN UP",
+  "@signUp": {
+    "description": "Sign up label to sign into website."
+  },
+     "resetPwd": "RESET PWD",
+    "@resetPwd": {
+      "description": "Reset pwd label to sign into website."
+    },
   "bannerDemoText": "Your password was updated on your other device. Please sign in again.",
   "@bannerDemoText": {
     "description": "Password was updated on a different device and the user is required to sign in again"
@@ -2056,6 +2064,10 @@
   "@demoTextFieldEnterUSPhoneNumber": {
     "description": "Error that shows up if non-valid non-US phone number is given."
   },
+    "demoTextFieldEnterMobilePhoneNumberOrEMail": "########### or ###@163.com - Enter a mobile phone number or email.",
+    "@demoTextFieldEnterMobilePhoneNumberOrEMail": {
+      "description": "Error that shows up if non-valid non-mobile phone number or email is given."
+    },
   "demoTextFieldEnterPassword": "Please enter a password.",
   "@demoTextFieldEnterPassword": {
     "description": "Error that shows up if password is not given."
@@ -2108,12 +2120,25 @@
   "@demoTextFieldUSD": {
     "description": "US currency, used as suffix in input field for salary."
   },
-  "demoTextFieldNoMoreThan": "No more than 8 characters.",
+  "demoTextFieldNoMoreThan": "至少8-16个字符，至少1个大写字母，1个小写字母和1个数字，其他可以是任意字符.",
   "@demoTextFieldNoMoreThan": {
     "description": "Helper text for password input field."
   },
+  "demoPWDFieldNoMoreThan": "No more than 8 characters.",
+    "@demoPWDFieldNoMoreThan": {
+      "description": "Helper text for password input field."
+    },
+
   "demoTextFieldPassword": "Password*",
   "@demoTextFieldPassword": {
+    "description": "Label for password input field, that is required (hence the star)."
+  },
+   "demoTextFieldOldPassword": "Old Password*",
+  "@demoTextFieldOldPassword": {
+    "description": "Label for password input field, that is required (hence the star)."
+  },
+  "demoTextFieldNewPassword": "New Password*",
+  "@demoTextFieldNewPassword": {
     "description": "Label for password input field, that is required (hence the star)."
   },
   "demoTextFieldRetypePassword": "Re-type password*",

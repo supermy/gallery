@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
 
-// BEGIN Login textFieldDemo
+// 登录
 
-class MyLoginPage extends StatelessWidget {
-  const MyLoginPage({super.key});
+class SigninPage extends StatelessWidget {
+  const SigninPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,27 +18,27 @@ class MyLoginPage extends StatelessWidget {
         automaticallyImplyLeading: false,
         title: Text(GalleryLocalizations.of(context)!.demoTextFieldTitle),
       ),
-      body: const MyLoginFormField(),
+      body: const SigninFormField(),
     );
   }
 }
 
-class MyLoginFormField extends StatefulWidget {
-  const MyLoginFormField({super.key});
+class SigninFormField extends StatefulWidget {
+  const SigninFormField({super.key});
 
   @override
-  MyLoginFormFieldState createState() => MyLoginFormFieldState();
+  SigninFormFieldState createState() => SigninFormFieldState();
 }
 
-class MyPersonData {
+class SigninPersonData {
   String? name = '';
   String? phoneNumber = '';
   String? email = '';
   String password = '';
 }
 
-class MyPasswordField extends StatefulWidget {
-  const MyPasswordField({
+class SigninPasswordField extends StatefulWidget {
+  const SigninPasswordField({
     super.key,
     this.restorationId,
     this.fieldKey,
@@ -64,10 +64,10 @@ class MyPasswordField extends StatefulWidget {
   final TextInputAction? textInputAction;
 
   @override
-  State<MyPasswordField> createState() => _MyPasswordFieldState();
+  State<SigninPasswordField> createState() => _SigninPasswordFieldState();
 }
 
-class _MyPasswordFieldState extends State<MyPasswordField> with RestorationMixin {
+class _SigninPasswordFieldState extends State<SigninPasswordField> with RestorationMixin {
   final RestorableBool _obscureText = RestorableBool(true);
 
   @override
@@ -84,7 +84,7 @@ class _MyPasswordFieldState extends State<MyPasswordField> with RestorationMixin
       key: widget.fieldKey,
       restorationId: 'password_text_field',
       obscureText: _obscureText.value,
-      maxLength: 8,
+      maxLength: 16,
       onSaved: widget.onSaved,
       validator: widget.validator,
       onFieldSubmitted: widget.onFieldSubmitted,
@@ -114,9 +114,9 @@ class _MyPasswordFieldState extends State<MyPasswordField> with RestorationMixin
   }
 }
 
-class MyLoginFormFieldState extends State<MyLoginFormField>
+class SigninFormFieldState extends State<SigninFormField>
     with RestorationMixin {
-  MyPersonData person = MyPersonData();
+  SigninPersonData person = SigninPersonData();
 
   late FocusNode _phoneNumber, _email, _lifeStory, _password, _retypePassword;
 
@@ -172,8 +172,8 @@ class MyLoginFormFieldState extends State<MyLoginFormField>
   // 提交
   void _handleSubmitted() {
     final form = _formKey.currentState!;
-    print(form);
-    print(form.validate());
+    // print(form);
+    // print(form.validate());
     if (!form.validate()) {
       _autoValidateModeIndex.value =
           AutovalidateMode.always.index; // Start validating on every change.
@@ -183,9 +183,9 @@ class MyLoginFormFieldState extends State<MyLoginFormField>
     } else {
       form.save();
       // print(person.phoneNumber,person.password,person.email);
-      print(person);
-      print(person.email);
-      print(person.password);
+      // print(person);
+      // print(person.email);
+      // print(person.password);
       showInSnackBar(GalleryLocalizations.of(context)!
           .demoMyLoginEMailAndPwd(person.email!, person.password!));
     }
@@ -211,6 +211,20 @@ class MyLoginFormFieldState extends State<MyLoginFormField>
     return null;
   }
 
+  //             phone = {type = "string", pattern = "^[1][3,5,7,8][0-9]\\d{8}$"},
+
+  String? _validateEMailOrPhone(String? value) {
+    final emailExp = RegExp(r"^[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?$");
+    final phoneExp = RegExp(r'^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$');
+    if (!emailExp.hasMatch(value!) && !phoneExp.hasMatch(value!)) {
+      return GalleryLocalizations.of(context)!.demoTextFieldEnterMobilePhoneNumberOrEMail;
+    }
+    //
+    // if (!phoneExp.hasMatch(value!)) {
+    //   return GalleryLocalizations.of(context)!.demoTextFieldEnterUSPhoneNumber;
+    // }
+    return null;
+  }
   String? _validateEMail(String? value) {
     final phoneExp = RegExp(r"^[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?$");
     if (!phoneExp.hasMatch(value!)) {
@@ -224,7 +238,7 @@ class MyLoginFormFieldState extends State<MyLoginFormField>
     final passwordField = _passwordFieldKey.currentState!;
     final phoneExp = RegExp(r"^[a-zA-Z][a-zA-Z0-9_]{4,18}$");
     if (!phoneExp.hasMatch(passwordField.value!)) {
-      return GalleryLocalizations.of(context)!.demoTextFieldEnterPassword;
+      return GalleryLocalizations.of(context)!.demoPWDFieldNoMoreThan;
     }
     // if (passwordField.value == null || passwordField.value!.isEmpty) {
     //   return GalleryLocalizations.of(context)!.demoTextFieldEnterPassword;
@@ -318,11 +332,11 @@ class MyLoginFormFieldState extends State<MyLoginFormField>
                 decoration: InputDecoration(
                   filled: true,
                   icon: const Icon(Icons.email),
-                  hintText: localizations.demoTextFieldYourEmailAddress,
-                  labelText: localizations.demoTextFieldEmail,
+                  hintText: localizations.demoSharedXAxisSignInTextFieldLabel,
+                  labelText: localizations.demoSharedXAxisSignInTextFieldLabel,
                 ),
                 keyboardType: TextInputType.emailAddress,
-                validator: _validateEMail,
+                validator: _validateEMailOrPhone,
                 onSaved: (value) {
                   person.email = value;
                   _password.requestFocus();
@@ -367,12 +381,12 @@ class MyLoginFormFieldState extends State<MyLoginFormField>
               //   maxLines: 1,
               // ),
               sizedBoxSpace,
-              MyPasswordField(
+              SigninPasswordField(
                 restorationId: 'password_field',
                 textInputAction: TextInputAction.next,
                 focusNode: _password,
                 fieldKey: _passwordFieldKey,
-                helperText: localizations.demoTextFieldNoMoreThan,
+                helperText: localizations.demoPWDFieldNoMoreThan,
                 labelText: localizations.demoTextFieldPassword,
                 validator: _validatePasswordEmpty,
                 onSaved: (value) {
@@ -407,7 +421,7 @@ class MyLoginFormFieldState extends State<MyLoginFormField>
               Center(
                 child: ElevatedButton(
                   onPressed: _handleSubmitted,
-                  child: Text(localizations.demoTextFieldSubmit),
+                  child: Text(localizations.signIn),
                 ),
               ),
               sizedBoxSpace,

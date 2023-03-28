@@ -894,7 +894,7 @@ class Demos {
       GalleryDemo(
         title: localizations.signIn,
         icon: GalleryIcons.textFieldsAlt,
-        slug: 'my-login',
+        slug: 'signin',
         subtitle: localizations.demoTextFieldSubtitle,
         configurations: [
           GalleryDemoConfiguration(
@@ -903,7 +903,45 @@ class Demos {
             documentationUrl: '$_docsBaseUrl/material/TextField-class.html',
             buildRoute: (context) => DeferredWidget(
               materialDemosLibrary,
-                  () => material_demos.MyLoginPage(),
+                  () => material_demos.SigninPage(),
+            ),
+            code: CodeSegments.textFieldDemo,
+          ),
+        ],
+        category: GalleryDemoCategory.material,
+      ),
+      GalleryDemo(
+        title: localizations.signUp,
+        icon: GalleryIcons.textFieldsAlt,
+        slug: 'signup',
+        subtitle: localizations.demoTextFieldSubtitle,
+        configurations: [
+          GalleryDemoConfiguration(
+            title: localizations.signIn,
+            description: localizations.demoTextFieldDescription,
+            documentationUrl: '$_docsBaseUrl/material/TextField-class.html',
+            buildRoute: (context) => DeferredWidget(
+              materialDemosLibrary,
+                  () => material_demos.SignupPage(),
+            ),
+            code: CodeSegments.textFieldDemo,
+          ),
+        ],
+        category: GalleryDemoCategory.material,
+      ),
+      GalleryDemo(
+        title: localizations.resetPwd,
+        icon: GalleryIcons.textFieldsAlt,
+        slug: 'resetpwd',
+        subtitle: localizations.demoTextFieldSubtitle,
+        configurations: [
+          GalleryDemoConfiguration(
+            title: localizations.signIn,
+            description: localizations.demoTextFieldDescription,
+            documentationUrl: '$_docsBaseUrl/material/TextField-class.html',
+            buildRoute: (context) => DeferredWidget(
+              materialDemosLibrary,
+                  () => material_demos.ResetPwdPage(),
             ),
             code: CodeSegments.textFieldDemo,
           ),
